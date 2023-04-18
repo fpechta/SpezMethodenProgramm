@@ -1,0 +1,68 @@
+Mit welchen Methoden/Iteratoren kann man alle Elemente eines Arrays sammeln, die bestimmten Bedingungen (nicht) genügen?
+-find_all
+-reject
+-------------------------------------------------------------------------------------------------------------------------
+Wie kann man auf alle Elemente eines Array eine Funktion anwenden, ohne die Methode each zu benutzen?
+-map
+-collect
+-------------------------------------------------------------------------------------------------------------------------
+Erklären Sie die Wirkung und die Benutzung der Methode inject eines Arrays.
+-Greift sequentiell auf Elemente des Enumerators zu und führt Operationen darauf aus
+(0..3).inject(0) {|x,y| x+y}
+-------------------------------------------------------------------------------------------------------------------------
+Wie findet man heraus, ob mindestens ein Element eines Arrays einer Bedingung genügen? Dito für alle Elemente?
+-any?
+-all?
+-------------------------------------------------------------------------------------------------------------------------
+Geben Sie den String "Das ist Satz Nr. 1." 10 mal aus, wobei die Zahl 1 jedesmal durch die Nummer des aktuellen Durchlaufs ersetzt werden soll.
+10.times do |i|
+  puts "Das ist Satz Nr. #{i+1}."
+end
+-------------------------------------------------------------------------------------------------------------------------
+Sammeln Sie jede dritte Zahl im Bereich von 0 bis 12 und geben Sie diese Komma-separiert aus. Hinter der letzten Zahl soll kein Komma sein!
+result = (0..12).step(3).to_a.join(",")
+puts result
+-------------------------------------------------------------------------------------------------------------------------
+Geben Sie den Inhalt eines Arrays mit 16 Einträgen aus, wobei immer 4 Einträge auf einer Zeile stehen sollen. Nutzen Sie dabei nur each
+array = (1..16).to_a
+
+array.each_with_index do |element, index|
+  print element
+  print "\n" if (index+1) % 4 == 0
+end
+-------------------------------------------------------------------------------------------------------------------------
+Schreiben Sie ein einfaches Ruby-Programm, welches aus einer Liste mit Wörtern zufällig eines auswählt und dem Nutzer die gesamte Liste präsentiert. Der Nutzer soll seine Vermutung eingeben und das Programm soll mitteilen, ob der Nutzer das richtige Wort geraten hat.
+
+Denken Sie daran, dass die Nutzereingabe alles Mögliche enthalten kann, insbesondere zusätzliche Leerzeichen.
+
+words = ["Hund", "Katze", "Pferd", "Vogel", "Fisch"]
+
+random_word = words.sample
+puts "Hier sind alle Wörter: #{words.join(', ')}"
+
+puts "Rate welches Wort ausgewählt wurde:"
+guess = gets.chomp.strip.downcase
+
+if guess == random_word.downcase
+  puts "Richtig geraten! Das Wort war #{random_word}."
+else
+  puts "Leider falsch geraten. Das Wort war #{random_word}."
+end
+-------------------------------------------------------------------------------------------------------------------------
+Schreiben Sie ein einfaches grep, welches die angegebene Datei öffnet und alle Zeilen, in denen der Suchausdruck vorkommt, ausgibt. Finden Sie möglichst viele Varianten (auch mit bzw. ohne RegExp).
+
+Beispiel für Aufruf: grep "wuppie" meinFile.txt
+
+Die Zeilen sollen inklusive der Zeilennummer ausgegeben werden. (Selbststudium File und RegExp.)
+
+def grep(search_term, file_path)
+  File.foreach(file_path).with_index do |line, line_number|
+    if line.match(/#{search_term}/)
+      puts "#{file_path}:#{line_number+1}: #{line}"
+    end
+  end
+end
+grep("wuppie", "Test.txt")
+-------------------------------------------------------------------------------------------------------------------------
+Was ist der Unterschied zwischen include und require? Was macht load?
+Include wird verwendet, um Modulmethoden in Klassen oder Module zu mischen, require wird verwendet, um externe Dateien zu laden und stellt sicher, dass sie nur einmal geladen werden, und load wird verwendet, um Dateien bei jedem Aufruf zu laden, so dass Änderungen berücksichtigt werden können.
